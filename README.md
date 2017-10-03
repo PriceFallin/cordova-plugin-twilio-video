@@ -1,2 +1,18 @@
-# cordova-plugin-twilio-video
-Cordova plugin for Twilio Video
+**Using the cordova plugin**
+
+1. Add to the project
+    - `ionic cordova plugin add [path/to/plugin]`
+  
+2. Implement the source code
+  
+    - Declare app name the head of source file where you want to use the plugin (ionic 2/3 only)
+  
+    - Get token And Call the API
+    `cordova.videoconversation.open( RoomName: string, Token: string);`
+
+
+## iOS Notes
+  1. Open Ionic project in xCode
+  2. Then you should the Xcode window
+  3.  Add TwilioVideo.framework to the project
+    - Can refer IOS/ Manual  Part of [https://www.twilio.com/docs/api/video/download-video-sdks#ios-sdk](https://www.twilio.com/docs/api/video/download-video-sdks#ios-sdk)
