@@ -12,7 +12,6 @@
 
 
 ## iOS Notes
-  1. Open Ionic project in xCode
-  2. Then you should the Xcode window
+  1. Open Ionic project in Xcode
   3.  Add TwilioVideo.framework to the project
-    - Can refer IOS/ Manual  Part of [https://www.twilio.com/docs/api/video/download-video-sdks#ios-sdk](https://www.twilio.com/docs/api/video/download-video-sdks#ios-sdk)
+      - Refer IOS/ Manual  Part of [https://www.twilio.com/docs/api/video/download-video-sdks#ios-sdk](https://www.twilio.com/docs/api/video/download-video-sdks#ios-sdk)
