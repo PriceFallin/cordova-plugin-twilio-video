@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="jSN-F6-Q4K">
+    <device id="retina5_5" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Twilio Video View Controller-->
+        <scene sceneID="nZR-qd-fY9">
+            <objects>
+                <viewController storyboardIdentifier="TwilioVideoViewController" id="jSN-F6-Q4K" customClass="TwilioVideoViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="8oD-ke-cGW"/>
+                        <viewControllerLayoutGuide type="bottom" id="tZu-uw-hgi"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="3Bh-pO-6uY">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TwilioVideo APIs" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ebq-ja-6iU">
+                                <rect key="frame" x="0.0" y="20" width="414" height="16"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rwp-9E-VzS" userLabel="Mic Button">
+                                <rect key="frame" x="25" y="671" width="89" height="60"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="Bxc-aZ-Tmq"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <state key="normal" image="no-mic-ios-white-33px.png">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="micButtonPressed:" destination="jSN-F6-Q4K" eventType="touchUpInside" id="6Tr-Cb-Rmf"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="krA-sT-Z3g" userLabel="Hangup Button">
+                                <rect key="frame" x="300" y="671" width="89" height="60"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="92T-mf-e9C"/>
+                                </constraints>
+                                <state key="normal" image="end-call-ios-white-33px.png">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="disconnectButtonPressed:" destination="jSN-F6-Q4K" eventType="touchUpInside" id="ekH-u1-k6a"/>
+                                </connections>
+                            </button>
+                            <view contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="hJ3-NM-pz1" customClass="TVIVideoView">
+                                <rect key="frame" x="269" y="496" width="120" height="160"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="120" id="Qdp-xd-HrW"/>
+                                    <constraint firstAttribute="height" constant="160" id="dIZ-IN-nad"/>
+                                </constraints>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="deh-AI-0mD" userLabel="Video Button">
+                                <rect key="frame" x="122" y="671" width="89" height="60"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" id="bBQ-Cd-b2s"/>
+                                    <constraint firstAttribute="height" constant="60" id="q5K-MX-lfp"/>
+                                </constraints>
+                                <state key="normal" image="no-video-ios-white-33px.png"/>
+                                <connections>
+                                    <action selector="videoButtonPressed:" destination="jSN-F6-Q4K" eventType="touchDown" id="kPw-Vk-Yv8"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XFY-jj-EdK" userLabel="Flip Camera Button">
+                                <rect key="frame" x="211" y="671" width="89" height="60"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="dm3-2X-JGF"/>
+                                </constraints>
+                                <state key="normal" image="switch-camera-ios-white-33px.png"/>
+                                <connections>
+                                    <action selector="flipcameraButtonPressed:" destination="jSN-F6-Q4K" eventType="touchDown" id="hBg-o8-0Zp"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="deh-AI-0mD" firstAttribute="leading" secondItem="rwp-9E-VzS" secondAttribute="trailing" constant="8" symbolic="YES" id="2gz-qD-ziY"/>
+                            <constraint firstItem="tZu-uw-hgi" firstAttribute="top" secondItem="deh-AI-0mD" secondAttribute="bottom" constant="5" id="5fv-ef-YwW"/>
+                            <constraint firstItem="tZu-uw-hgi" firstAttribute="top" secondItem="XFY-jj-EdK" secondAttribute="bottom" constant="5" id="NoC-sl-kmx"/>
+                            <constraint firstItem="tZu-uw-hgi" firstAttribute="top" secondItem="rwp-9E-VzS" secondAttribute="bottom" constant="5" id="Ns3-sc-3Jk"/>
+                            <constraint firstItem="XFY-jj-EdK" firstAttribute="width" secondItem="deh-AI-0mD" secondAttribute="width" id="O0H-Rv-YWt"/>
+                            <constraint firstItem="ebq-ja-6iU" firstAttribute="leading" secondItem="3Bh-pO-6uY" secondAttribute="leading" id="OWm-Gg-PVO"/>
+                            <constraint firstItem="deh-AI-0mD" firstAttribute="width" secondItem="rwp-9E-VzS" secondAttribute="width" id="SSu-iR-wYQ"/>
+                            <constraint firstItem="rwp-9E-VzS" firstAttribute="leading" secondItem="3Bh-pO-6uY" secondAttribute="leadingMargin" constant="5" id="TVz-xi-qqb"/>
+                            <constraint firstItem="krA-sT-Z3g" firstAttribute="leading" secondItem="XFY-jj-EdK" secondAttribute="trailing" id="UTz-oo-zvQ"/>
+                            <constraint firstItem="XFY-jj-EdK" firstAttribute="leading" secondItem="deh-AI-0mD" secondAttribute="trailing" id="XIm-c9-212"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="krA-sT-Z3g" secondAttribute="trailing" constant="5" id="XZb-7U-48G"/>
+                            <constraint firstAttribute="trailing" secondItem="ebq-ja-6iU" secondAttribute="trailing" id="eiL-ob-cD1"/>
+                            <constraint firstItem="krA-sT-Z3g" firstAttribute="width" secondItem="XFY-jj-EdK" secondAttribute="width" id="hxu-M6-GeM"/>
+                            <constraint firstItem="tZu-uw-hgi" firstAttribute="top" secondItem="krA-sT-Z3g" secondAttribute="bottom" constant="5" id="rVd-fL-7rg"/>
+                            <constraint firstItem="ebq-ja-6iU" firstAttribute="top" secondItem="8oD-ke-cGW" secondAttribute="bottom" id="sqw-S7-DJO"/>
+                            <constraint firstItem="krA-sT-Z3g" firstAttribute="top" secondItem="hJ3-NM-pz1" secondAttribute="bottom" constant="15" id="xnP-i5-IpA"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="hJ3-NM-pz1" secondAttribute="trailing" constant="5" id="z4j-Ie-fsx"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="disconnectButton" destination="krA-sT-Z3g" id="uQu-1U-Ree"/>
+                        <outlet property="flipCameraButton" destination="XFY-jj-EdK" id="4z3-Ad-GTA"/>
+                        <outlet property="messageLabel" destination="ebq-ja-6iU" id="yjH-dj-KgF"/>
+                        <outlet property="micButton" destination="rwp-9E-VzS" id="SW4-po-OHw"/>
+                        <outlet property="previewView" destination="hJ3-NM-pz1" id="1kY-rd-tEJ"/>
+                        <outlet property="videoButton" destination="deh-AI-0mD" id="xQb-FF-JQs"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="JfB-JL-3y4" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="321.73913043478262" y="366.84782608695656"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="end-call-ios-white-33px.png" width="33" height="33"/>
+        <image name="no-mic-ios-white-33px.png" width="33" height="33"/>
+        <image name="no-video-ios-white-33px.png" width="33" height="33"/>
+        <image name="switch-camera-ios-white-33px.png" width="33" height="33"/>
+    </resources>
+</document>

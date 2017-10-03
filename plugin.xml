@@ -1,0 +1,94 @@
+<?xml version='1.0' encoding='utf-8'?>
+<plugin 
+    id="cordova-plugin-twilio-video"
+    version="0.2.0" 
+    xmlns="http://apache.org/cordova/ns/plugins/1.0"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <name>Twilio video conversation plugin</name>
+    <license></license>
+    <js-module name="twilio-solution" src="conversation.js">
+        <clobbers target="cordova.videoconversation" />
+    </js-module>
+    <engines>
+        <engine name="cordova" version=">=4.0.0" />
+    </engines>
+    <platform name="ios">
+        <config-file parent="/*" target="config.xml">
+            <feature name="VideoConversationPlugin">
+                <param name="ios-package" value="TwilioVideoPlugin" />
+            </feature>
+        </config-file>
+        <source-file src="src/ios/TwilioVideoPlugin.m" />
+        <source-file src="src/ios/TwilioVideoViewController.m" />
+        <header-file src="src/ios/TwilioVideoViewController.h" />
+        <resource-file src="src/ios/Resources/TwilioVideo.storyboard" target="Resources/TwilioVideo.storyboard" />
+        <resource-file src="src/ios/Resources/end-call-ios-white-33px.png" target="Resources/end-call-ios-white-33px.png" />
+        <resource-file src="src/ios/Resources/no-mic-ios-white-33px.png" target="Resources/no-mic-ios-white-33px.png" />
+        <resource-file src="src/ios/Resources/no-video-ios-white-33px.png" target="Resources/no-video-ios-white-33px.png" />
+        <resource-file src="src/ios/Resources/switch-camera-ios-white-33px.png" target="Resources/switch-camera-ios-white-33px.png" />
+        
+        <preference name="CAMERA_USAGE_DESCRIPTION" default="Camera" />
+        <config-file target="*-Info.plist" parent="NSCameraUsageDescription">
+            <string>$CAMERA_USAGE_DESCRIPTION</string>
+        </config-file>
+        <preference name="MICROPHONE_USAGE_DESCRIPTION" default="Microphone"/>
+        <config-file target="*-Info.plist" parent="NSMicrophoneUsageDescription">
+            <string>$MICROPHONE_USAGE_DESCRIPTION</string>
+        </config-file>
+        
+    </platform>
+    <platform name="android">
+        <hook type="after_plugin_install" src="hooks/after_plugin_install/hook-add-r-import.js" />
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="VideoConversationPlugin">
+                <param name="android-package" value="cordova-plugin-twilio-video.VideoConversationPlugin" />
+            </feature>
+        </config-file>
+        <config-file target="AndroidManifest.xml" parent="/*">
+            <uses-feature android:name="android.hardware.camera" />
+			<uses-feature android:name="android.hardware.camera.autofocus" />
+			<uses-feature android:glEsVersion="0x00020000" android:required="true" />
+            <uses-permission android:name="android.permission.CAMERA" />
+            <uses-permission android:name="android.permission.INTERNET" />
+            <uses-permission android:name="android.permission.RECORD_AUDIO" />
+            <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+            <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+            <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+        </config-file>
+        <config-file target="AndroidManifest.xml" parent="/manifest/application">
+            <activity 
+                android:name="cordova-plugin-twilio-video.ConversationActivity"
+                android:configChanges="orientation|screenSize" 
+                android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+            </activity>
+        </config-file>
+        <source-file src="src/android/VideoConversationPlugin.java" target-dir="src/com/ekreative/cordova/videoconversations" />
+        <source-file src="src/android/ConversationActivity.java" target-dir="src/com/ekreative/cordova/videoconversations" />
+        <source-file src="src/android/Dialog.java" target-dir="src/com/ekreative/cordova/videoconversations" />
+        <framework src="src/android/twiliovideo.gradle" custom="true" type="gradleReference" />
+        <dependency id="cordova-plugin-compat" />
+        
+        <resource-file src="src/android/res/drawable/ic_call_black_24dp.xml" target="res/drawable/ic_call_black_24dp.xml" />
+        <resource-file src="src/android/res/drawable/ic_call_end_white_24px.xml" target="res/drawable/ic_call_end_white_24px.xml" />
+        <resource-file src="src/android/res/drawable/ic_call_white_24px.xml" target="res/drawable/ic_call_white_24px.xml" />
+        <resource-file src="src/android/res/drawable/ic_mic_green_24px.xml" target="res/drawable/ic_mic_green_24px.xml" />
+        <resource-file src="src/android/res/drawable/ic_mic_off_red_24px.xml" target="res/drawable/ic_mic_off_red_24px.xml" />
+        <resource-file src="src/android/res/drawable/ic_switch_camera_512dp.xml" target="res/drawable/ic_switch_camera_512dp.xml" />
+        <resource-file src="src/android/res/drawable/ic_videocam_green_24px.xml" target="res/drawable/ic_videocam_green_24px.xml" />
+        <resource-file src="src/android/res/drawable/ic_videocam_off_red_24px.xml" target="res/drawable/ic_videocam_off_red_24px.xml" />
+        <resource-file src="src/android/res/drawable/ic_volume_down_green_24px.xml" target="res/drawable/ic_volume_down_green_24px.xml" />
+        <resource-file src="src/android/res/drawable/ic_volume_down_white_24px.xml" target="res/drawable/ic_volume_down_white_24px.xml" />
+
+        <resource-file src="src/android/res/layout/activity_video.xml" target="res/layout/activity_video.xml" />
+        <resource-file src="src/android/res/layout/content_video.xml" target="res/layout/content_video.xml" />
+      
+        <resource-file src="src/android/res/values/colors.xml" target="res/values/colors.xml" />
+        <resource-file src="src/android/res/values/dimens.xml" target="res/values/dimens.xml" />
+        <resource-file src="src/android/res/values/strings.xml" target="res/values/strings.xml" />
+        <resource-file src="src/android/res/values/styles.xml" target="res/values/styles.xml" />
+
+        <resource-file src="src/android/res/values-v21/styles.xml" target="res/values-v21/styles.xml" />
+        <resource-file src="src/android/res/values-w820dp/dimens.xml" target="res/values-w820dp/dimens.xml" />
+
+    </platform>
+</plugin>
