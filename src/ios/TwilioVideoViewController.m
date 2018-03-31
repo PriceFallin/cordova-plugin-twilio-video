@@ -44,12 +44,7 @@
 
 // `TVIVideoView` created from a storyboard
 @property (weak, nonatomic) IBOutlet TVIVideoView *previewView;
-
-@property (nonatomic, weak) IBOutlet UIButton *disconnectButton;
 @property (nonatomic, weak) IBOutlet UILabel *messageLabel;
-@property (nonatomic, weak) IBOutlet UIButton *micButton;
-@property (nonatomic, weak) IBOutlet UIButton *flipCameraButton;
-@property (nonatomic, weak) IBOutlet UIButton *videoButton;
 
 @end
 
@@ -94,17 +89,6 @@
     
     if (self.localAudioTrack) {
         self.localAudioTrack.enabled = !self.localAudioTrack.isEnabled;
-        
-        // Toggle the button title
-        if (self.localAudioTrack.isEnabled) {
-            self.micButton.selected = false;
-            self.micButton.alpha = self.micButton.selected ? 0.7 : 1;
-            // [self.micButton setTitle:@"Mute" forState:UIControlStateNormal];
-        } else {
-            // [self.micButton setTitle:@"Unmute" forState:UIControlStateNormal];
-            self.micButton.selected = true;
-            self.micButton.alpha = self.micButton.selected ? 0.7 : 1;
-        }
     }
 }
 
@@ -119,14 +103,6 @@
 - (IBAction)videoButtonPressed:(id)sender {
     if(self.localVideoTrack){
         self.localVideoTrack.enabled = !self.localVideoTrack.isEnabled;
-        
-        if(self.localVideoTrack.isEnabled){
-            self.videoButton.selected=false;
-            self.videoButton.alpha = self.videoButton.selected ? 0.7 : 1;
-        }else {
-            self.videoButton.selected=true;
-            self.videoButton.alpha = self.videoButton.selected ? 0.7 : 1;
-        }
     }
 }
 

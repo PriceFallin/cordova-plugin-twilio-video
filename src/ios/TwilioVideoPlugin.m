@@ -5,7 +5,7 @@
 
 @interface TwilioVideoPlugin : CDVPlugin
 
-@property (nonatomic, strong, nullable) UIViewController *videoViewController;
+@property (nonatomic, strong, nullable) UIViewController* videoViewController;
 
 @end
 
@@ -22,7 +22,7 @@
     CGFloat height = 624; // Again kinda just fits my 6+.
 
     dispatch_async(dispatch_get_main_queue(), ^{
-        UIStoryboard *sb = [UIStoryboard storyboardWithName:@"TwilioVideo" bundle:nil];
+        UIStoryboard* sb = [UIStoryboard storyboardWithName:@"TwilioVideo" bundle:nil];
         TwilioVideoViewController *vc = [sb instantiateViewControllerWithIdentifier:@"TwilioVideoViewController"];
 
         vc.accessToken = token;
