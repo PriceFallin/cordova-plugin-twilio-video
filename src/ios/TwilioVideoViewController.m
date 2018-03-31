@@ -68,13 +68,6 @@
     
     // Preview our local camera track in the local video preview view.
     [self startPreview];
-    
-    // Disconnect and mic button will be displayed when client is connected to a room.
-    // self.disconnectButton.hidden = YES;
-    // self.micButton.hidden = YES;
-    
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)];
-    [self.view addGestureRecognizer:tap];
 }
 
 #pragma mark - Public
@@ -262,8 +255,6 @@
 
 // Reset the client ui status
 - (void)showRoomUI:(BOOL)inRoom {
-    // self.micButton.hidden = !inRoom;
-    // self.disconnectButton.hidden = !inRoom;
     [UIApplication sharedApplication].idleTimerDisabled = inRoom;
 }
 
@@ -274,6 +265,7 @@
             [self.remoteView removeFromSuperview];
         }
         self.participant = nil;
+        if (_closeVideo) { _closeVideo(); }
     }
 }
 

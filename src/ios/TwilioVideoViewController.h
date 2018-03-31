@@ -8,7 +8,10 @@
 
 @interface TwilioVideoViewController : UIViewController
 
+typedef void (^CloseVideo)();
+
 @property (nonatomic, strong) NSString *accessToken;
+@property (nonatomic, copy) CloseVideo closeVideo;
 
 - (void)connectToRoom:(NSString*)room ;
 

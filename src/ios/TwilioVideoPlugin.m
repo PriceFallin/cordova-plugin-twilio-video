@@ -24,7 +24,7 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         UIStoryboard *sb = [UIStoryboard storyboardWithName:@"TwilioVideo" bundle:nil];
         TwilioVideoViewController *vc = [sb instantiateViewControllerWithIdentifier:@"TwilioVideoViewController"];
-        
+
         vc.accessToken = token;
         UIViewController* mainVC = self.viewController;
 
@@ -32,6 +32,12 @@
         vc.view.frame = CGRectMake(x, y, width, height);
         [mainVC.view addSubview:vc.view];
         [vc didMoveToParentViewController:mainVC];
+
+        TwilioVideoPlugin* __weak weakSelf = self;
+        vc.closeVideo = ^() {
+            TwilioVideoPlugin* __strong strongSelf = weakSelf;
+            [strongSelf dismissTwilioVideoController];
+        };
 
         CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"ok"];
         [vc connectToRoom:room];
@@ -41,7 +47,7 @@
 
 }
 
-- (void) dismissTwilioVideoController {
+- (void)dismissTwilioVideoController {
     // Could add some animation here if you'd prefer.
     [_videoViewController willMoveToParentViewController:nil];
     [_videoViewController.view removeFromSuperview];
