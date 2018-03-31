@@ -31,20 +31,18 @@
 
 #pragma mark Video SDK components
 
-@property (nonatomic, strong) TVICameraCapturer *camera;
-@property (nonatomic, strong) TVILocalVideoTrack *localVideoTrack;
-@property (nonatomic, strong) TVILocalAudioTrack *localAudioTrack;
-@property (nonatomic, strong) TVIParticipant *participant;
-@property (nonatomic, weak) TVIVideoView *remoteView;
-@property (nonatomic, strong) TVIRoom *room;
+@property (nonatomic, strong) TVICameraCapturer* camera;
+@property (nonatomic, strong) TVILocalVideoTrack* localVideoTrack;
+@property (nonatomic, strong) TVILocalAudioTrack* localAudioTrack;
+@property (nonatomic, strong) TVIParticipant* participant;
+@property (nonatomic, weak) TVIVideoView* remoteView;
+@property (nonatomic, strong) TVIRoom* room;
 
 #pragma mark UI Element Outlets and handles
 
-
-
 // `TVIVideoView` created from a storyboard
-@property (weak, nonatomic) IBOutlet TVIVideoView *previewView;
-@property (nonatomic, weak) IBOutlet UILabel *messageLabel;
+@property (weak, nonatomic) IBOutlet TVIVideoView* previewView;
+@property (nonatomic, weak) IBOutlet UILabel* messageLabel;
 
 @end
 
@@ -125,7 +123,7 @@
         
         //    [self logMessage:@"Video track created"];
         
-        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
+        UITapGestureRecognizer* tap = [[UITapGestureRecognizer alloc] initWithTarget:self
                                                                               action:@selector(flipCamera)];
         [self.previewView addGestureRecognizer:tap];
     }
@@ -166,8 +164,8 @@
     // Prepare local media which we will share with Room Participants.
     [self prepareLocalMedia];
     
-    TVIConnectOptions *connectOptions = [TVIConnectOptions optionsWithToken:self.accessToken
-                                                                      block:^(TVIConnectOptionsBuilder * _Nonnull builder) {
+    TVIConnectOptions* connectOptions = [TVIConnectOptions optionsWithToken:self.accessToken
+                                                                      block:^(TVIConnectOptionsBuilder* _Nonnull builder) {
                                                                           
                                                                           // Use the local media that we prepared earlier.
                                                                           builder.audioTracks = self.localAudioTrack ? @[ self.localAudioTrack ] : @[ ];
@@ -186,7 +184,7 @@
 
 - (void)setupRemoteView {
     // Creating `TVIVideoView` programmatically
-    TVIVideoView *remoteView = [[TVIVideoView alloc] init];
+    TVIVideoView* remoteView = [[TVIVideoView alloc] init];
     
     // `TVIVideoView` supports UIViewContentModeScaleToFill, UIViewContentModeScaleAspectFill and UIViewContentModeScaleAspectFit
     // UIViewContentModeScaleAspectFit is the default mode when you create `TVIVideoView` programmatically.
@@ -195,7 +193,7 @@
     [self.view insertSubview:remoteView atIndex:0];
     self.remoteView = remoteView;
     
-    NSLayoutConstraint *centerX = [NSLayoutConstraint constraintWithItem:self.remoteView
+    NSLayoutConstraint* centerX = [NSLayoutConstraint constraintWithItem:self.remoteView
                                                                attribute:NSLayoutAttributeCenterX
                                                                relatedBy:NSLayoutRelationEqual
                                                                   toItem:self.view
@@ -203,7 +201,7 @@
                                                               multiplier:1
                                                                 constant:0];
     [self.view addConstraint:centerX];
-    NSLayoutConstraint *centerY = [NSLayoutConstraint constraintWithItem:self.remoteView
+    NSLayoutConstraint* centerY = [NSLayoutConstraint constraintWithItem:self.remoteView
                                                                attribute:NSLayoutAttributeCenterY
                                                                relatedBy:NSLayoutRelationEqual
                                                                   toItem:self.view
@@ -211,7 +209,7 @@
                                                               multiplier:1
                                                                 constant:0];
     [self.view addConstraint:centerY];
-    NSLayoutConstraint *width = [NSLayoutConstraint constraintWithItem:self.remoteView
+    NSLayoutConstraint* width = [NSLayoutConstraint constraintWithItem:self.remoteView
                                                              attribute:NSLayoutAttributeWidth
                                                              relatedBy:NSLayoutRelationEqual
                                                                 toItem:self.view
@@ -219,7 +217,7 @@
                                                             multiplier:1
                                                               constant:0];
     [self.view addConstraint:width];
-    NSLayoutConstraint *height = [NSLayoutConstraint constraintWithItem:self.remoteView
+    NSLayoutConstraint* height = [NSLayoutConstraint constraintWithItem:self.remoteView
                                                               attribute:NSLayoutAttributeHeight
                                                               relatedBy:NSLayoutRelationEqual
                                                                  toItem:self.view
@@ -245,7 +243,7 @@
     }
 }
 
-- (void)logMessage:(NSString *)msg {
+- (void)logMessage:(NSString*)msg {
     NSLog(@"%@", msg);
     self.messageLabel.text = msg;
 }
@@ -254,7 +252,7 @@
 
 #pragma mark - TVIRoomDelegate
 
-- (void)didConnectToRoom:(TVIRoom *)room {
+- (void)didConnectToRoom:(TVIRoom*)room {
     // At the moment, this example only supports rendering one Participant at a time.
     
     // [self logMessage:[NSString stringWithFormat:@"Connected to room %@ as %@", room.name, room.localParticipant.identity]];
@@ -267,7 +265,7 @@
     }
 }
 
-- (void)room:(TVIRoom *)room didDisconnectWithError:(nullable NSError *)error {
+- (void)room:(TVIRoom*)room didDisconnectWithError:(nullable NSError*)error {
     // [self logMessage:[NSString stringWithFormat:@"Disconncted from room %@, error = %@", room.name, error]];
     
     [self cleanupRemoteParticipant];
@@ -276,15 +274,14 @@
     [self showRoomUI:NO];
 }
 
-- (void)room:(TVIRoom *)room didFailToConnectWithError:(nonnull NSError *)error{
+- (void)room:(TVIRoom*)room didFailToConnectWithError:(nonnull NSError*)error{
     //  [self logMessage:[NSString stringWithFormat:@"Failed to connect to room, error = %@", error]];
     
     self.room = nil;
-    
     [self showRoomUI:NO];
 }
 
-- (void)room:(TVIRoom *)room participantDidConnect:(TVIParticipant *)participant {
+- (void)room:(TVIRoom*)room participantDidConnect:(TVIParticipant*)participant {
     if (!self.participant) {
         self.participant = participant;
         self.participant.delegate = self;
@@ -293,7 +290,7 @@
     [self logMessage:@" "];
 }
 
-- (void)room:(TVIRoom *)room participantDidDisconnect:(TVIParticipant *)participant {
+- (void)room:(TVIRoom*)room participantDidDisconnect:(TVIParticipant*)participant {
     if (self.participant == participant) {
         [self cleanupRemoteParticipant];
     }
@@ -303,7 +300,7 @@
 
 #pragma mark - TVIParticipantDelegate
 
-- (void)participant:(TVIParticipant *)participant addedVideoTrack:(TVIVideoTrack *)videoTrack {
+- (void)participant:(TVIParticipant*)participant addedVideoTrack:(TVIVideoTrack*)videoTrack {
     //   [self logMessage:[NSString stringWithFormat:@"Participant %@ added video track.", participant.identity]];
     
     if (self.participant == participant) {
@@ -312,7 +309,7 @@
     }
 }
 
-- (void)participant:(TVIParticipant *)participant removedVideoTrack:(TVIVideoTrack *)videoTrack {
+- (void)participant:(TVIParticipant*)participant removedVideoTrack:(TVIVideoTrack*)videoTrack {
     //   [self logMessage:[NSString stringWithFormat:@"Participant %@ removed video track.", participant.identity]];
     
     if (self.participant == participant) {
@@ -321,16 +318,16 @@
     }
 }
 
-- (void)participant:(TVIParticipant *)participant addedAudioTrack:(TVIAudioTrack *)audioTrack {
+- (void)participant:(TVIParticipant*)participant addedAudioTrack:(TVIAudioTrack*)audioTrack {
     //  [self logMessage:[NSString stringWithFormat:@"Participant %@ added audio track.", participant.identity]];
 }
 
-- (void)participant:(TVIParticipant *)participant removedAudioTrack:(TVIAudioTrack *)audioTrack {
+- (void)participant:(TVIParticipant*)participant removedAudioTrack:(TVIAudioTrack*)audioTrack {
     //  [self logMessage:[NSString stringWithFormat:@"Participant %@ removed audio track.", participant.identity]];
 }
 
-- (void)participant:(TVIParticipant *)participant enabledTrack:(TVITrack *)track {
-    NSString *type = @"";
+- (void)participant:(TVIParticipant*)participant enabledTrack:(TVITrack*)track {
+    NSString* type = @"";
     if ([track isKindOfClass:[TVIAudioTrack class]]) {
         type = @"audio";
     } else {
@@ -339,8 +336,8 @@
     //  [self logMessage:[NSString stringWithFormat:@"Participant %@ enabled %@ track.", participant.identity, type]];
 }
 
-- (void)participant:(TVIParticipant *)participant disabledTrack:(TVITrack *)track {
-    NSString *type = @"";
+- (void)participant:(TVIParticipant*)participant disabledTrack:(TVITrack*)track {
+    NSString* type = @"";
     if ([track isKindOfClass:[TVIAudioTrack class]]) {
         type = @"audio";
     } else {
@@ -351,14 +348,14 @@
 
 #pragma mark - TVIVideoViewDelegate
 
-- (void)videoView:(TVIVideoView *)view videoDimensionsDidChange:(CMVideoDimensions)dimensions {
+- (void)videoView:(TVIVideoView*)view videoDimensionsDidChange:(CMVideoDimensions)dimensions {
     NSLog(@"Dimensions changed to: %d x %d", dimensions.width, dimensions.height);
     [self.view setNeedsLayout];
 }
 
 #pragma mark - TVICameraCapturerDelegate
 
-- (void)cameraCapturer:(TVICameraCapturer *)capturer didStartWithSource:(TVICameraCaptureSource)source {
+- (void)cameraCapturer:(TVICameraCapturer*)capturer didStartWithSource:(TVICameraCaptureSource)source {
     self.previewView.mirror = (source == TVICameraCaptureSourceFrontCamera);
 }
 
