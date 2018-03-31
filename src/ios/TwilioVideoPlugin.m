@@ -5,21 +5,49 @@
 
 @interface TwilioVideoPlugin : CDVPlugin
 
-@property (nonatomic, strong, nullable) UIViewController* videoViewController;
+@property (nonatomic, strong, nullable) TwilioVideoViewController* videoViewController;
 
 @end
 
 @implementation TwilioVideoPlugin
 
 - (void)open:(CDVInvokedUrlCommand*)command {
-    NSString* room = command.arguments[0];
-    NSString* token = command.arguments[1];
 
+    // Actions are:
+    // disconnect
+    // flip
+    // toggle_mute
+    // toggle_camera
+    // cart
+    // the default is to assume this is a call and just open the call,
+    // the call takes 2 parameters from Cordova: room (callId) & accessToken.
+
+    NSString* action = command.arguments[0];
+    if ([action isEqualToString:@"disconnect"]) {
+        [_videoViewController disconnectButtonPressed];
+    } else if ([action isEqualToString:@"flip"]) {
+        [_videoViewController flipcameraButtonPressed];
+    } else if ([action isEqualToString:@"toggle_mute"]) {
+        [_videoViewController micButtonPressed];
+    } else if ([action isEqualToString:@"toggle_camera"]) {
+        [_videoViewController videoButtonPressed];
+    } else if ([action isEqualToString:@"cart"]) {
+        // TODO(jep): Max I'm not really sure what I need to do here to switch to the cart Cordova view.
+    } else {
+        NSString* room = command.arguments[0];
+        NSString* token = command.arguments[1];
+        [self openCallWithRoom:room andToken:token andCommand:command];
+    }
+
+}
+
+- (void)openCallWithRoom:(NSString*)room andToken:(NSString*)token andCommand:
+(CDVInvokedUrlCommand*)command {
     // This will come from command.arguments[2...5] eventually.
     CGFloat x = 0;
     CGFloat y = 64;
     CGFloat width = 414; // Hard coded to my 6+ width for now.
-    CGFloat height = 624; // Again kinda just fits my 6+.
+    CGFloat height = 600; // Again kinda just fits my 6+.
 
     dispatch_async(dispatch_get_main_queue(), ^{
         UIStoryboard* sb = [UIStoryboard storyboardWithName:@"TwilioVideo" bundle:nil];
@@ -44,7 +72,6 @@
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
         _videoViewController = vc;
     });
-
 }
 
 - (void)dismissTwilioVideoController {

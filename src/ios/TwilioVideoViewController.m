@@ -76,12 +76,12 @@
     }
 }
 
-- (IBAction)disconnectButtonPressed:(id)sender {
+- (void)disconnectButtonPressed {
     [self.room disconnect];
     [self dismissViewControllerAnimated:true completion:nil];
 }
 
-- (IBAction)micButtonPressed:(id)sender {
+- (void)micButtonPressed {
     
     // We will toggle the mic to mute/unmute and change the title according to the user action.
     
@@ -90,7 +90,7 @@
     }
 }
 
-- (IBAction)flipcameraButtonPressed:(id)sender {
+- (void)flipcameraButtonPressed {
     if(self.localVideoTrack){
         //  self.flipCameraButton.selected = !self.flipCameraButton.selected;
         //  self.flipCameraButton.alpha = self.flipCameraButton.selected ? 0.7 : 1;
@@ -98,7 +98,7 @@
     }
 }
 
-- (IBAction)videoButtonPressed:(id)sender {
+- (void)videoButtonPressed {
     if(self.localVideoTrack){
         self.localVideoTrack.enabled = !self.localVideoTrack.isEnabled;
     }
