@@ -12,15 +12,19 @@
 @implementation TwilioVideoPlugin
 
 - (void)open:(CDVInvokedUrlCommand*)command {
+    NSString* room = command.arguments[0];
+    NSString* token = command.arguments[1];
+    [self openCallWithRoom:room andToken:token andCommand:command];
+}
 
+- (void)handleAction:(CDVInvokedUrlCommand*)command {
     // Actions are:
     // disconnect
     // flip
     // toggle_mute
     // toggle_camera
-    // cart
-    // the default is to assume this is a call and just open the call,
-    // the call takes 2 parameters from Cordova: room (callId) & accessToken.
+    // minimize (show the cart)
+    // maximize (hide cart and show local + remote video)
 
     NSString* action = command.arguments[0];
     if ([action isEqualToString:@"disconnect"]) {
@@ -36,11 +40,9 @@
     } else if ([action isEqualToString:@"maximize"]) {
         [_videoViewController maximize];
     } else {
-        NSString* room = command.arguments[0];
-        NSString* token = command.arguments[1];
-        [self openCallWithRoom:room andToken:token andCommand:command];
+        NSLog(@"Bad action sent to TwilioVideoPlugin: %@", action);
+        NSLog(@"Available actions are: disconnect, flip, toggle_mute, toggle_camera, minimize, maximize.");
     }
-
 }
 
 - (void)openCallWithRoom:(NSString*)room andToken:(NSString*)token andCommand:

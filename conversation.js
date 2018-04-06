@@ -8,6 +8,15 @@ var conversations = {
       'open',
       [callTo,token]
     );
+  },
+  handleAction: function(actionName, succ,fail) {
+    exec(
+      succ || function(){},
+      fail || function(){},
+      'VideoConversationPlugin',
+      'handleAction',
+      [actionName]
+    );
   }
 };
 
