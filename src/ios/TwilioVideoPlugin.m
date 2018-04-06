@@ -31,8 +31,10 @@
         [_videoViewController micButtonPressed];
     } else if ([action isEqualToString:@"toggle_camera"]) {
         [_videoViewController videoButtonPressed];
-    } else if ([action isEqualToString:@"cart"]) {
-        // TODO(jep): Max I'm not really sure what I need to do here to switch to the cart Cordova view.
+    } else if ([action isEqualToString:@"minimize"]) {
+        [_videoViewController minimize];
+    } else if ([action isEqualToString:@"maximize"]) {
+        [_videoViewController maximize];
     } else {
         NSString* room = command.arguments[0];
         NSString* token = command.arguments[1];

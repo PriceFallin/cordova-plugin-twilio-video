@@ -10,7 +10,7 @@
 
 typedef void (^CloseVideo)();
 
-@property (nonatomic, strong) NSString *accessToken;
+@property (nonatomic, strong) NSString* accessToken;
 @property (nonatomic, copy) CloseVideo closeVideo;
 
 - (void)connectToRoom:(NSString*)room;
@@ -19,5 +19,7 @@ typedef void (^CloseVideo)();
 - (void)flipcameraButtonPressed;
 - (void)micButtonPressed;
 - (void)videoButtonPressed;
+- (void)minimize;
+- (void)maximize;
 
 @end

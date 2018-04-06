@@ -137,6 +137,14 @@
     }
 }
 
+- (void)minimize {
+    _camera.previewView.hidden = YES;
+}
+
+- (void)maximize {
+    _camera.previewView.hidden = NO;
+}
+
 - (void)prepareLocalMedia {
     
     // We will share local audio and video when we connect to room.
