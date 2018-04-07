@@ -138,24 +138,18 @@
 }
 
 - (void)minimize {
-    _camera.previewView.hidden = YES;
+    _previewView.hidden = YES;
 }
 
 - (void)maximize {
-    _camera.previewView.hidden = NO;
+    _previewView.hidden = NO;
 }
 
 - (void)prepareLocalMedia {
-    
     // We will share local audio and video when we connect to room.
-    
     // Create an audio track.
     if (!self.localAudioTrack) {
         self.localAudioTrack = [TVILocalAudioTrack track];
-        
-        if (!self.localAudioTrack) {
-            //         [self logMessage:@"Failed to add audio track"];
-        }
     }
     
     // Create a video track which captures from the camera.
