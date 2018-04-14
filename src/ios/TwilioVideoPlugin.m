@@ -48,11 +48,13 @@
 
 - (void)openCallWithRoom:(NSString*)room andToken:(NSString*)token andCommand:
 (CDVInvokedUrlCommand*)command {
-    // This will come from command.arguments[2...5] eventually.
     CGFloat x = 0;
     CGFloat y = 64;
-    CGFloat width = 414; // Hard coded to my 6+ width for now.
-    CGFloat height = 600; // Again kinda just fits my 6+.
+    CGSize totalSize = self.viewController.view.frame.size;
+
+    CGFloat width = totalSize.width;
+    CGFloat height = totalSize.height - 64 - 60;
+    _videoViewController.view.frame = CGRectMake(x, y, width, height);
 
     dispatch_async(dispatch_get_main_queue(), ^{
         UIStoryboard* sb = [UIStoryboard storyboardWithName:@"TwilioVideo" bundle:nil];
@@ -72,7 +74,7 @@
             [strongSelf dismissTwilioVideoController];
         };
 
-        CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"ok"];
+        CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"ok"];
         [vc connectToRoom:room];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
         _videoViewController = vc;
@@ -81,10 +83,18 @@
 
 - (void)maximize {
     [_videoViewController maximize];
+
+    // - [x] SHOULD BE 60 from the bottom and 44 from the top.
+    // - [x] Move local video to the top right.
+    // - [ ] Remote video is disabled, make it transparent.
+    // - [ ] If local video is disabled, hide my own square as well.
+
     CGFloat x = 0;
     CGFloat y = 64;
-    CGFloat width = 414; // Hard coded to my 6+ width for now.
-    CGFloat height = 600; // Again kinda just fits my 6+.
+    CGSize totalSize = self.viewController.view.frame.size;
+
+    CGFloat width = totalSize.width;
+    CGFloat height = totalSize.height - 64 - 60;
     _videoViewController.view.frame = CGRectMake(x, y, width, height);
     [_videoViewController.view removeGestureRecognizer:_drag];
     _videoViewController.view.layer.cornerRadius = 0;
@@ -93,11 +103,12 @@
 
 - (void)minimize {
     [_videoViewController minimize];
-    CGFloat x = 0;
+    CGSize totalSize = self.viewController.view.frame.size;
+    CGFloat width = totalSize.width * 0.5;
+    CGFloat height = width * .75;
+    CGFloat x = totalSize.width - width;
     CGFloat y = 64;
-    // Hard coded 4:3 values.
-    CGFloat width = 300;
-    CGFloat height = 225;
+
     _videoViewController.view.frame = CGRectMake(x, y, width, height);
     _drag = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handleDrag:)];
     [_videoViewController.view addGestureRecognizer:_drag];
