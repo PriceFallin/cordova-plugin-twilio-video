@@ -99,9 +99,10 @@
 }
 
 - (void)videoButtonPressed {
-    if(self.localVideoTrack){
-        self.localVideoTrack.enabled = !self.localVideoTrack.isEnabled;
+    if (_localVideoTrack) {
+        _localVideoTrack.enabled = !_localVideoTrack.isEnabled;
     }
+    _previewView.hidden = !_localVideoTrack.enabled;
 }
 
 #pragma mark - Private
@@ -334,6 +335,9 @@
         type = @"audio";
     } else {
         type = @"video";
+        if (participant == self.participant) {
+            _remoteView.hidden = NO;
+        }
     }
     //  [self logMessage:[NSString stringWithFormat:@"Participant %@ enabled %@ track.", participant.identity, type]];
 }
@@ -344,6 +348,9 @@
         type = @"audio";
     } else {
         type = @"video";
+        if (participant == self.participant) {
+            _remoteView.hidden = YES;
+        }
     }
     //  [self logMessage:[NSString stringWithFormat:@"Participant %@ disabled %@ track.", participant.identity, type]];
 }

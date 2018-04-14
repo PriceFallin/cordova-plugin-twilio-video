@@ -83,12 +83,6 @@
 
 - (void)maximize {
     [_videoViewController maximize];
-
-    // - [x] SHOULD BE 60 from the bottom and 44 from the top.
-    // - [x] Move local video to the top right.
-    // - [ ] Remote video is disabled, make it transparent.
-    // - [ ] If local video is disabled, hide my own square as well.
-
     CGFloat x = 0;
     CGFloat y = 64;
     CGSize totalSize = self.viewController.view.frame.size;
