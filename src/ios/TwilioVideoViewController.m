@@ -52,13 +52,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+
     [self logMessage:[NSString stringWithFormat:@"TwilioVideo v%@", [TwilioVideo version]]];
-    
+
     // Configure access token manually for testing, if desired! Create one manually in the console
     //  self.accessToken = @"TWILIO_ACCESS_TOKEN";
-    
-    
+
+
     // Preview our local camera track in the local video preview view.
     [self startPreview];
 }
@@ -67,7 +67,7 @@
 
 - (void)connectToRoom:(NSString*)room {
     [self showRoomUI:YES];
-    
+
     if ([self.accessToken isEqualToString:@"TWILIO_ACCESS_TOKEN"]) {
         [self logMessage:[NSString stringWithFormat:@"Fetching an access token"]];
         [self showRoomUI:NO];
@@ -82,9 +82,9 @@
 }
 
 - (void)micButtonPressed {
-    
+
     // We will toggle the mic to mute/unmute and change the title according to the user action.
-    
+
     if (self.localAudioTrack) {
         self.localAudioTrack.enabled = !self.localAudioTrack.isEnabled;
     }
@@ -112,7 +112,7 @@
         [self.previewView removeFromSuperview];
         return;
     }
-    
+
     self.camera = [[TVICameraCapturer alloc] initWithSource:TVICameraCaptureSourceFrontCamera delegate:self];
     self.localVideoTrack = [TVILocalVideoTrack trackWithCapturer:self.camera];
     if (!self.localVideoTrack) {
@@ -120,9 +120,9 @@
     } else {
         // Add renderer to video track for local preview
         [self.localVideoTrack addRenderer:self.previewView];
-        
+
         //    [self logMessage:@"Video track created"];
-        
+
         UITapGestureRecognizer* tap = [[UITapGestureRecognizer alloc] initWithTarget:self
                                                                               action:@selector(flipCamera)];
         [self.previewView addGestureRecognizer:tap];
@@ -151,7 +151,7 @@
     if (!self.localAudioTrack) {
         self.localAudioTrack = [TVILocalAudioTrack track];
     }
-    
+
     // Create a video track which captures from the camera.
     if (!self.localVideoTrack) {
         [self startPreview];
@@ -165,36 +165,36 @@
     }
     // Prepare local media which we will share with Room Participants.
     [self prepareLocalMedia];
-    
+
     TVIConnectOptions* connectOptions = [TVIConnectOptions optionsWithToken:self.accessToken
                                                                       block:^(TVIConnectOptionsBuilder* _Nonnull builder) {
-                                                                          
+
                                                                           // Use the local media that we prepared earlier.
                                                                           builder.audioTracks = self.localAudioTrack ? @[ self.localAudioTrack ] : @[ ];
                                                                           builder.videoTracks = self.localVideoTrack ? @[ self.localVideoTrack ] : @[ ];
-                                                                          
+
                                                                           // The name of the Room where the Client will attempt to connect to. Please note that if you pass an empty
                                                                           // Room `name`, the Client will create one for you. You can get the name or sid from any connected Room.
                                                                           builder.roomName = room;
                                                                       }];
-    
+
     // Connect to the Room using the options we provided.
     self.room = [TwilioVideo connectWithOptions:connectOptions delegate:self];
-    
+
     //   [self logMessage:[NSString stringWithFormat:@"Attempting to connect to room %@", room]];
 }
 
 - (void)setupRemoteView {
     // Creating `TVIVideoView` programmatically
     TVIVideoView* remoteView = [[TVIVideoView alloc] init];
-    
+
     // `TVIVideoView` supports UIViewContentModeScaleToFill, UIViewContentModeScaleAspectFill and UIViewContentModeScaleAspectFit
     // UIViewContentModeScaleAspectFit is the default mode when you create `TVIVideoView` programmatically.
     self.remoteView.contentMode = UIViewContentModeScaleAspectFit;
-    
+
     [self.view insertSubview:remoteView atIndex:0];
     self.remoteView = remoteView;
-    
+
     NSLayoutConstraint* centerX = [NSLayoutConstraint constraintWithItem:self.remoteView
                                                                attribute:NSLayoutAttributeCenterX
                                                                relatedBy:NSLayoutRelationEqual
@@ -256,10 +256,10 @@
 
 - (void)didConnectToRoom:(TVIRoom*)room {
     // At the moment, this example only supports rendering one Participant at a time.
-    
+
     // [self logMessage:[NSString stringWithFormat:@"Connected to room %@ as %@", room.name, room.localParticipant.identity]];
     [self logMessage:@"Waiting on participant to join"];
-    
+
     if (room.participants.count > 0) {
         self.participant = room.participants[0];
         self.participant.delegate = self;
@@ -269,16 +269,16 @@
 
 - (void)room:(TVIRoom*)room didDisconnectWithError:(nullable NSError*)error {
     // [self logMessage:[NSString stringWithFormat:@"Disconncted from room %@, error = %@", room.name, error]];
-    
+
     [self cleanupRemoteParticipant];
     self.room = nil;
-    
+
     [self showRoomUI:NO];
 }
 
 - (void)room:(TVIRoom*)room didFailToConnectWithError:(nonnull NSError*)error{
     //  [self logMessage:[NSString stringWithFormat:@"Failed to connect to room, error = %@", error]];
-    
+
     self.room = nil;
     [self showRoomUI:NO];
 }
@@ -304,7 +304,7 @@
 
 - (void)participant:(TVIParticipant*)participant addedVideoTrack:(TVIVideoTrack*)videoTrack {
     //   [self logMessage:[NSString stringWithFormat:@"Participant %@ added video track.", participant.identity]];
-    
+
     if (self.participant == participant) {
         [self setupRemoteView];
         [videoTrack addRenderer:self.remoteView];
@@ -313,7 +313,7 @@
 
 - (void)participant:(TVIParticipant*)participant removedVideoTrack:(TVIVideoTrack*)videoTrack {
     //   [self logMessage:[NSString stringWithFormat:@"Participant %@ removed video track.", participant.identity]];
-    
+
     if (self.participant == participant) {
         [videoTrack removeRenderer:self.remoteView];
         [self.remoteView removeFromSuperview];
@@ -362,3 +362,4 @@
 }
 
 @end
+
