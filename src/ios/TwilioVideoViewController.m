@@ -27,14 +27,14 @@
 
 @end
 
-@interface TwilioVideoViewController () <UITextFieldDelegate, TVIParticipantDelegate, TVIRoomDelegate, TVIVideoViewDelegate, TVICameraCapturerDelegate>
+@interface TwilioVideoViewController () <UITextFieldDelegate, TVIRemoteParticipantDelegate, TVIRoomDelegate, TVIVideoViewDelegate, TVICameraCapturerDelegate>
 
 #pragma mark Video SDK components
 
 @property (nonatomic, strong) TVICameraCapturer* camera;
 @property (nonatomic, strong) TVILocalVideoTrack* localVideoTrack;
 @property (nonatomic, strong) TVILocalAudioTrack* localAudioTrack;
-@property (nonatomic, strong) TVIParticipant* participant;
+@property (nonatomic, strong) TVIRemoteParticipant* participant;
 @property (nonatomic, weak) TVIVideoView* remoteView;
 @property (nonatomic, strong) TVIRoom* room;
 
@@ -238,7 +238,8 @@
 - (void)cleanupRemoteParticipant {
     if (self.participant) {
         if ([self.participant.videoTracks count] > 0) {
-            [self.participant.videoTracks[0] removeRenderer:self.remoteView];
+            // TODO(jep): I'm not sure this is necessary with version 2.x of the TwilioVideo plugin.
+//            [self.participant.remoteVideoTracks[0] removeRenderer:self.remoteView];
             [self.remoteView removeFromSuperview];
         }
         self.participant = nil;
@@ -261,8 +262,8 @@
     // [self logMessage:[NSString stringWithFormat:@"Connected to room %@ as %@", room.name, room.localParticipant.identity]];
     [self logMessage:@"Waiting on participant to join"];
 
-    if (room.participants.count > 0) {
-        self.participant = room.participants[0];
+    if (room.remoteParticipants.count > 0) {
+        self.participant = room.remoteParticipants[0];
         self.participant.delegate = self;
         [self logMessage:@" "];
     }
